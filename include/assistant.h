@@ -2,6 +2,9 @@
 #define ASSISTANT_H
 
 #include <QMainWindow>
+#include <QString>
+#include <QStringList>
+#include <QProcess>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,5 +22,7 @@ public:
 
 private:
     Ui::Assistant *ui;
+
+    QString getName();
 };
 #endif // ASSISTANT_H
