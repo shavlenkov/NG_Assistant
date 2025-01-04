@@ -27,6 +27,9 @@ private slots:
 private:
     Ui::Assistant *ui;
 
+    const int MAX_LENGTH = 59;
+
     QString getName();
+    QString insertLineBreaks(QString text, int maxLength);
 };
 #endif // ASSISTANT_H

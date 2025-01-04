@@ -7,6 +7,7 @@ Assistant::Assistant(QWidget *parent)
 {
     ui->setupUi(this);
     ui->label_2->setText(QString("Hello, %1! How can I help you?").arg(getName()));
+    ui->chat->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     connect(ui->sendMessageButton, &QPushButton::clicked, this, &Assistant::sendMessage);
 }
@@ -27,12 +28,23 @@ QString Assistant::getName()
     return output;
 }
 
+QString Assistant::insertLineBreaks(QString text, int maxLength)
+{
+    QStringList textParts = {};
+
+    for(int start = 0; start < text.length(); start += maxLength) {
+        textParts.append(text.mid(start, maxLength));
+    }
+
+    return QString(textParts.join("\n"));
+}
+
 void Assistant::sendMessage()
 {
     QString message = ui->messageInputField->toPlainText().trimmed();
 
     if(!message.isEmpty()) {
-        ui->chat->addItem(QTime::currentTime().toString("[hh:mm] ") + getName() + ": " + message);
+        ui->chat->addItem(insertLineBreaks(QTime::currentTime().toString("[hh:mm] ") + getName() + ": " + message, MAX_LENGTH));
 
         ui->messageInputField->clear();
     }
