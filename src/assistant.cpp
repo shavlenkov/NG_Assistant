@@ -7,6 +7,8 @@ Assistant::Assistant(QWidget *parent)
 {
     ui->setupUi(this);
     ui->label_2->setText(QString("Hello, %1! How can I help you?").arg(getName()));
+
+    connect(ui->sendMessageButton, &QPushButton::clicked, this, &Assistant::sendMessage);
 }
 
 QString Assistant::getName()
@@ -23,6 +25,17 @@ QString Assistant::getName()
     }
 
     return output;
+}
+
+void Assistant::sendMessage()
+{
+    QString message = ui->messageInputField->toPlainText().trimmed();
+
+    if(!message.isEmpty()) {
+        ui->chat->addItem(QTime::currentTime().toString("[hh:mm] ") + getName() + ": " + message);
+
+        ui->messageInputField->clear();
+    }
 }
 
 Assistant::~Assistant()
