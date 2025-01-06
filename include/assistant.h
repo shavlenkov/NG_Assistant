@@ -6,6 +6,18 @@
 #include <QStringList>
 #include <QProcess>
 #include <QTime>
+#include <QMenu>
+#include <QAction>
+#include <QMessageBox>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QJsonDocument>
+#include <QFile>
+#include <QFileDialog>
+#include <QByteArray>
+#include <QRegularExpression>
+#include <QRegularExpressionMatch>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -24,8 +36,17 @@ public:
 private slots:
     void sendMessage();
 
+    void createChat();
+    void saveChat();
+    void loadChat();
+
 private:
     Ui::Assistant *ui;
+
+    QMenu *m_chatMenu;
+    QAction *m_createChat;
+    QAction *m_saveChat;
+    QAction *m_loadChat;
 
     const int MAX_LENGTH = 59;
 
