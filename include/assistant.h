@@ -18,6 +18,10 @@
 #include <QByteArray>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
+#include <QThread>
+#include <QStatusBar>
+
+#include "aiworker.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -34,11 +38,17 @@ public:
     ~Assistant();
 
 private slots:
-    void sendMessage();
+    void sendUserMessage();
 
     void createChat();
     void saveChat();
     void loadChat();
+
+public slots:
+    void sendAssistantMessage(QString message);
+
+signals:
+    void sendOllamaRequest(QString prompt);
 
 private:
     Ui::Assistant *ui;
@@ -47,6 +57,9 @@ private:
     QAction *m_createChat;
     QAction *m_saveChat;
     QAction *m_loadChat;
+
+    QThread *m_aiThread;
+    AIWorker *m_aiWorker;
 
     const int MAX_LENGTH = 59;
 

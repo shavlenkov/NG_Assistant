@@ -38,7 +38,16 @@ Assistant::Assistant(QWidget *parent)
         "QMenu::item:pressed { background-color: #666; }"
     );
 
-    connect(ui->sendMessageButton, &QPushButton::clicked, this, &Assistant::sendMessage);
+    m_aiWorker = new AIWorker();
+    m_aiThread = new QThread(this);
+    m_aiThread->start();
+    m_aiWorker->moveToThread(m_aiThread);
+
+    connect(ui->sendMessageButton, &QPushButton::clicked, this, &Assistant::sendUserMessage);
+
+    connect(this, &Assistant::sendOllamaRequest, m_aiWorker, &AIWorker::sendOllamaRequest);
+    connect(m_aiWorker, &AIWorker::responseReady, this, &Assistant::sendAssistantMessage);
+    connect(m_aiWorker, &AIWorker::statusUpdate, ui->statusbar, &QStatusBar::showMessage);
 
     connect(m_createChat, &QAction::triggered, this, &Assistant::createChat);
     connect(m_saveChat, &QAction::triggered, this, &Assistant::saveChat);
@@ -72,7 +81,7 @@ QString Assistant::insertLineBreaks(QString text, int maxLength)
     return QString(textParts.join("\n"));
 }
 
-void Assistant::sendMessage()
+void Assistant::sendUserMessage()
 {
     QString message = ui->messageInputField->toPlainText().trimmed();
 
@@ -80,7 +89,14 @@ void Assistant::sendMessage()
         ui->chat->addItem(insertLineBreaks(QTime::currentTime().toString("[hh:mm] ") + getName() + ": " + message, MAX_LENGTH));
 
         ui->messageInputField->clear();
+
+        emit sendOllamaRequest(message);
     }
+}
+
+void Assistant::sendAssistantMessage(QString message)
+{
+    ui->chat->addItem(insertLineBreaks(QTime::currentTime().toString("[hh:mm] ") + "Assistant: " + message, MAX_LENGTH));
 }
 
 void Assistant::createChat()
@@ -195,5 +211,8 @@ void Assistant::loadChat()
 
 Assistant::~Assistant()
 {
+    m_aiThread->exit(0);
+
+    delete m_aiWorker;
     delete ui;
 }
