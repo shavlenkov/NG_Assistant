@@ -48,6 +48,7 @@ Assistant::Assistant(QWidget *parent)
     connect(this, &Assistant::sendOllamaRequest, m_aiWorker, &AIWorker::sendOllamaRequest);
     connect(m_aiWorker, &AIWorker::responseReady, this, &Assistant::sendAssistantMessage);
     connect(m_aiWorker, &AIWorker::statusUpdate, ui->statusbar, &QStatusBar::showMessage);
+    connect(m_aiWorker, &AIWorker::startTypingAnimation, this, &Assistant::startTypingAnimation);
 
     connect(m_createChat, &QAction::triggered, this, &Assistant::createChat);
     connect(m_saveChat, &QAction::triggered, this, &Assistant::saveChat);
@@ -96,7 +97,11 @@ void Assistant::sendUserMessage()
 
 void Assistant::sendAssistantMessage(QString message)
 {
-    ui->chat->addItem(insertLineBreaks(QTime::currentTime().toString("[hh:mm] ") + "Assistant: " + message, MAX_LENGTH));
+    for(QTimer *timer : m_timers) {
+        timer->stop();
+    }
+
+    ui->chat->item(ui->chat->count() - 1)->setText(insertLineBreaks(QTime::currentTime().toString("[hh:mm] ") + "Assistant: " + message, MAX_LENGTH));
 }
 
 void Assistant::createChat()
@@ -207,6 +212,27 @@ void Assistant::loadChat()
     }
 
     QMessageBox::information(this, "Success", "Chat loaded successfully!");
+}
+
+void Assistant::startTypingAnimation()
+{
+    ui->chat->addItem(QTime::currentTime().toString("[hh:mm] ") + "Assistant: ");
+
+    QTimer *timer = new QTimer(this);
+
+    connect(timer, &QTimer::timeout, [this]() {
+        if(dotCounter <= 3) {
+            ui->chat->item(ui->chat->count() - 1)->setText(QTime::currentTime().toString("[hh:mm] ") + "Assistant: " + QString(dotCounter, '.'));
+            dotCounter++;
+        } else {
+            ui->chat->item(ui->chat->count() - 1)->setText(QTime::currentTime().toString("[hh:mm] ") + "Assistant: ");
+            dotCounter = 0;
+        }
+    });
+
+    m_timers.append(timer);
+
+    timer->start(200);
 }
 
 Assistant::~Assistant()

@@ -20,6 +20,8 @@
 #include <QRegularExpressionMatch>
 #include <QThread>
 #include <QStatusBar>
+#include <QList>
+#include <QTimer>
 
 #include "aiworker.h"
 
@@ -46,6 +48,7 @@ private slots:
 
 public slots:
     void sendAssistantMessage(QString message);
+    void startTypingAnimation();
 
 signals:
     void sendOllamaRequest(QString prompt);
@@ -61,7 +64,11 @@ private:
     QThread *m_aiThread;
     AIWorker *m_aiWorker;
 
+    QList<QTimer*> m_timers;
+
     const int MAX_LENGTH = 59;
+
+    int dotCounter = 0;
 
     QString getName();
     QString insertLineBreaks(QString text, int maxLength);

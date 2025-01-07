@@ -23,6 +23,7 @@ public slots:
 signals:
     void responseReady(QString text);
     void statusUpdate(QString text, int timeout = 0);
+    void startTypingAnimation();
 
 private:
     QNetworkAccessManager *m_manager;

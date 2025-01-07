@@ -22,6 +22,7 @@ void AIWorker::sendOllamaRequest(QString prompt)
     m_manager->post(request, QJsonDocument(json).toJson());
 
     emit statusUpdate("Thinking...");
+    emit startTypingAnimation();
 }
 
 void AIWorker::receivedResponse(QNetworkReply *reply)
