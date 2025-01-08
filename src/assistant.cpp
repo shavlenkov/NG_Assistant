@@ -102,6 +102,8 @@ void Assistant::sendAssistantMessage(QString message)
     }
 
     ui->chat->item(ui->chat->count() - 1)->setText(insertLineBreaks(QTime::currentTime().toString("[hh:mm] ") + "Assistant: " + message, MAX_LENGTH));
+
+    QTimer::singleShot(3000, ui->statusbar, &QStatusBar::clearMessage);
 }
 
 void Assistant::createChat()
