@@ -69,6 +69,7 @@ private:
     const int MAX_LENGTH = 59;
 
     int dotCounter = 0;
+    int messageCharIndex = 1;
 
     QString getName();
     QString insertLineBreaks(QString text, int maxLength);

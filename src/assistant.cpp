@@ -101,9 +101,22 @@ void Assistant::sendAssistantMessage(QString message)
         timer->stop();
     }
 
-    ui->chat->item(ui->chat->count() - 1)->setText(insertLineBreaks(QTime::currentTime().toString("[hh:mm] ") + "Assistant: " + message, MAX_LENGTH));
+    QTimer *timer = new QTimer(this);
 
-    QTimer::singleShot(3000, ui->statusbar, &QStatusBar::clearMessage);
+    connect(timer, &QTimer::timeout, [this, message, timer]() {
+        ui->chat->item(ui->chat->count() - 1)->setText(insertLineBreaks(QTime::currentTime().toString("[hh:mm] ") + "Assistant: " + message.left(messageCharIndex), MAX_LENGTH));
+
+        if(messageCharIndex == message.length()) {
+            timer->stop();
+            QTimer::singleShot(3000, ui->statusbar, &QStatusBar::clearMessage);
+
+            messageCharIndex = 1;
+        }
+
+        messageCharIndex++;
+    });
+
+    timer->start(50);
 }
 
 void Assistant::createChat()
