@@ -99,7 +99,10 @@ void Assistant::sendAssistantMessage(QString message)
 {
     for(QTimer *timer : m_timers) {
         timer->stop();
+        delete timer;
     }
+
+    m_timers.clear();
 
     QTimer *timer = new QTimer(this);
 
@@ -108,6 +111,8 @@ void Assistant::sendAssistantMessage(QString message)
 
         if(messageCharIndex == message.length()) {
             timer->stop();
+            delete timer;
+
             QTimer::singleShot(3000, ui->statusbar, &QStatusBar::clearMessage);
 
             messageCharIndex = 1;
