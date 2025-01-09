@@ -87,7 +87,12 @@ void Assistant::sendUserMessage()
     QString message = ui->messageInputField->toPlainText().trimmed();
 
     if(!message.isEmpty()) {
-        ui->chat->addItem(insertLineBreaks(QTime::currentTime().toString("[hh:mm] ") + getName() + ": " + message, MAX_LENGTH));
+        ui->chat->addItem(
+            insertLineBreaks(
+                QString("[%1] %2: %3").arg(QTime::currentTime().toString("hh:mm"), getName(), message),
+                MAX_LENGTH
+            )
+        );
 
         ui->messageInputField->clear();
 
@@ -107,7 +112,12 @@ void Assistant::sendAssistantMessage(QString message)
     QTimer *timer = new QTimer(this);
 
     connect(timer, &QTimer::timeout, [this, message, timer]() {
-        ui->chat->item(ui->chat->count() - 1)->setText(insertLineBreaks(QTime::currentTime().toString("[hh:mm] ") + "Assistant: " + message.left(messageCharIndex), MAX_LENGTH));
+        ui->chat->item(ui->chat->count() - 1)->setText(
+            insertLineBreaks(
+                QString("[%1] Assistant: %2").arg(QTime::currentTime().toString("hh:mm"), message.left(messageCharIndex)),
+                MAX_LENGTH
+            )
+        );
 
         if(messageCharIndex == message.length()) {
             timer->stop();
@@ -236,16 +246,20 @@ void Assistant::loadChat()
 
 void Assistant::startTypingAnimation()
 {
-    ui->chat->addItem(QTime::currentTime().toString("[hh:mm] ") + "Assistant: ");
+    ui->chat->addItem(QString("[%1] Assistant: ").arg(QTime::currentTime().toString("hh:mm")));
 
     QTimer *timer = new QTimer(this);
 
     connect(timer, &QTimer::timeout, [this]() {
         if(dotCounter <= 3) {
-            ui->chat->item(ui->chat->count() - 1)->setText(QTime::currentTime().toString("[hh:mm] ") + "Assistant: " + QString(dotCounter, '.'));
+            ui->chat->item(ui->chat->count() - 1)->setText(
+                QString("[%1] Assistant: %2").arg(QTime::currentTime().toString("hh:mm"), QString(dotCounter, '.'))
+            );
             dotCounter++;
         } else {
-            ui->chat->item(ui->chat->count() - 1)->setText(QTime::currentTime().toString("[hh:mm] ") + "Assistant: ");
+            ui->chat->item(ui->chat->count() - 1)->setText(
+                QString("[%1] Assistant: ").arg(QTime::currentTime().toString("hh:mm"))
+            );
             dotCounter = 0;
         }
     });
