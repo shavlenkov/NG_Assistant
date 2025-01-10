@@ -66,7 +66,7 @@ private:
 
     QList<QTimer*> m_timers;
 
-    const int MAX_LENGTH = 59;
+    const int MAX_LENGTH = 65;
 
     int dotCounter = 0;
     int messageCharIndex = 1;
