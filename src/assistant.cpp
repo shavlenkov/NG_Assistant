@@ -123,7 +123,10 @@ void Assistant::sendAssistantMessage(QString message)
             timer->stop();
             delete timer;
 
-            QTimer::singleShot(3000, ui->statusbar, &QStatusBar::clearMessage);
+            QTimer::singleShot(3000, [this]() {
+                ui->statusbar->clearMessage();
+                ui->messageInputField->setDisabled(false);
+            });
 
             messageCharIndex = 1;
         }
@@ -246,6 +249,7 @@ void Assistant::loadChat()
 
 void Assistant::startTypingAnimation()
 {
+    ui->messageInputField->setDisabled(true);
     ui->chat->addItem(QString("[%1] Assistant: ").arg(QTime::currentTime().toString("hh:mm")));
 
     QTimer *timer = new QTimer(this);
