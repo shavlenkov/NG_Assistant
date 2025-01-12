@@ -123,7 +123,7 @@ void Assistant::sendAssistantMessage(QString message)
             timer->stop();
             delete timer;
 
-            QTimer::singleShot(3000, [this]() {
+            QTimer::singleShot(1000, [this]() {
                 ui->statusbar->clearMessage();
                 ui->messageInputField->setDisabled(false);
             });
