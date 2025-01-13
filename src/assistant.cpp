@@ -84,7 +84,7 @@ QString Assistant::insertLineBreaks(QString text, int maxLength)
 
 void Assistant::sendUserMessage()
 {
-    QString message = ui->messageInputField->toPlainText().trimmed();
+    QString message = ui->messageInputField->text().trimmed();
 
     if(!message.isEmpty()) {
         ui->chat->addItem(

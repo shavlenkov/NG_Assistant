@@ -41,7 +41,7 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <widget class="QTextEdit" name="messageInputField">
+   <widget class="QLineEdit" name="messageInputField">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -51,7 +51,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: #fff; font-size: 15px; border: 1px solid #61dafb; padding-top: 10px;</string>
+     <string notr="true">color: #fff; font-size: 15px; border: 1px solid #61dafb;</string>
     </property>
     <property name="placeholderText">
      <string>Enter your message...</string>
