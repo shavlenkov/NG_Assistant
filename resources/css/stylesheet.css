@@ -1,0 +1,27 @@
+QMessageBox {
+    border: 1px solid #61dafb;
+    background-color: #000;
+}
+
+QLabel {
+    color: #61dafb;
+    font-size: 14px;
+}
+
+QPushButton, QMenuBar, QMenu {
+    color: #61dafb;
+    background-color: #000;
+}
+
+QMenuBar::item, QMenu::item {
+    color: #61dafb;
+    background-color: transparent;
+}
+
+QMenuBar::item:selected, QMenu::item:selected {
+    background-color: #444;
+}
+
+QMenuBar::item:pressed, QMenu::item:pressed {
+    background-color: #666;
+}
