@@ -10,7 +10,9 @@ AIWorker::AIWorker(QObject *parent)
 
 void AIWorker::sendOllamaRequest(QString prompt)
 {
-    QNetworkRequest request(QUrl("http://127.0.0.1:11434/api/generate"));
+    QSettings settings("../../.env", QSettings::IniFormat);
+
+    QNetworkRequest request(QUrl(settings.value("OLLAMA_URL").toString()));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
     QJsonObject json = {};
