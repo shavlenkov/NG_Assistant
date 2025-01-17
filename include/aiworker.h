@@ -3,7 +3,9 @@
 
 #include <QObject>
 #include <QNetworkAccessManager>
+#include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QDebug>
@@ -28,6 +30,9 @@ signals:
 
 private:
     QNetworkAccessManager *m_manager;
+    QJsonArray m_context;
+
+    bool m_animationStarted = false;
 };
 
 #endif // AIWORKER_H

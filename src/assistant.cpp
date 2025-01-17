@@ -64,6 +64,16 @@ QString Assistant::insertLineBreaks(QString text, int maxLength)
     return QString(textParts.join("\n"));
 }
 
+bool Assistant::isLinuxCommand(QString command)
+{
+    QProcess process;
+
+    process.start("which", QStringList() << command.split(" ")[0]);
+    process.waitForFinished();
+
+    return !process.readAllStandardOutput().trimmed().isEmpty();
+}
+
 void Assistant::sendUserMessage()
 {
     QString message = ui->messageInputField->text().trimmed();
@@ -90,6 +100,15 @@ void Assistant::sendAssistantMessage(QString message)
     }
 
     m_timers.clear();
+
+    if(isLinuxCommand(message)) {
+        QProcess process;
+
+        process.start("bash", QStringList() << "-c" << message);
+        process.waitForFinished();
+
+        message = "Action completed successfully!";
+    }
 
     QTimer *timer = new QTimer(this);
 

@@ -73,5 +73,6 @@ private:
 
     QString getName();
     QString insertLineBreaks(QString text, int maxLength);
+    bool isLinuxCommand(QString command);
 };
 #endif // ASSISTANT_H
