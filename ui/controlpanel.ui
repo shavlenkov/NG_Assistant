@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Assistant</class>
- <widget class="QMainWindow" name="Assistant">
+ <class>ControlPanel</class>
+ <widget class="QMainWindow" name="ControlPanel">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -9,12 +9,6 @@
     <width>700</width>
     <height>660</height>
    </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
@@ -29,65 +23,81 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Assistant</string>
+   <string>Control Panel</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background: #000</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <widget class="QLineEdit" name="messageInputField">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>550</y>
-      <width>481</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: #fff; font-size: 15px; border: 1px solid #61dafb;</string>
-    </property>
-    <property name="placeholderText">
-     <string>Enter your message...</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="sendMessageButton">
-    <property name="geometry">
-     <rect>
-      <x>550</x>
-      <y>550</y>
-      <width>101</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: #61dafb; border: 1px solid #61dafb</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset theme="QIcon::ThemeIcon::MailForward"/>
-    </property>
-   </widget>
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>30</y>
+      <y>220</y>
       <width>701</width>
-      <height>80</height>
+      <height>391</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QListWidget" name="paths">
+       <property name="minimumSize">
+        <size>
+         <width>600</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>600</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #61dafb; font-size: 15px; background: #000; border: 1px solid #61dafb</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>50</y>
+      <width>701</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <spacer name="horizontalSpacer_3">
        <property name="orientation">
         <enum>Qt::Orientation::Horizontal</enum>
        </property>
@@ -129,7 +139,7 @@
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_2">
+      <spacer name="horizontalSpacer_4">
        <property name="orientation">
         <enum>Qt::Orientation::Horizontal</enum>
        </property>
@@ -143,18 +153,18 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget_2">
+   <widget class="QWidget" name="horizontalLayoutWidget_3">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>100</y>
+      <y>120</y>
       <width>701</width>
       <height>41</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <spacer name="horizontalSpacer_3">
+      <spacer name="horizontalSpacer_5">
        <property name="orientation">
         <enum>Qt::Orientation::Horizontal</enum>
        </property>
@@ -191,72 +201,7 @@
         <string notr="true">color: #61dafb; font-size: 15px;</string>
        </property>
        <property name="text">
-        <string>Hello! How can I help you?</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_4">
-       <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget_3">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>160</y>
-      <width>701</width>
-      <height>361</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <spacer name="horizontalSpacer_5">
-       <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QListWidget" name="chat">
-       <property name="minimumSize">
-        <size>
-         <width>600</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>600</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>FreeMono</family>
-         <pointsize>-1</pointsize>
-         <italic>false</italic>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: #61dafb; font-size: 15px; background: #000; border: 1px solid #61dafb</string>
+        <string>Control Panel</string>
        </property>
       </widget>
      </item>
@@ -278,13 +223,23 @@
    <widget class="QWidget" name="horizontalLayoutWidget_4">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>-10</y>
+      <x>50</x>
+      <y>160</y>
       <width>651</width>
-      <height>61</height>
+      <height>51</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QPushButton" name="selectFolderButton">
+       <property name="styleSheet">
+        <string notr="true">color: #61dafb; font-size: 15px; background: #000; border: 1px solid #61dafb; padding: 7px;</string>
+       </property>
+       <property name="text">
+        <string>📁 Select Folder</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <spacer name="horizontalSpacer_7">
        <property name="orientation">
@@ -297,22 +252,6 @@
         </size>
        </property>
       </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="openControlPanelButton">
-       <property name="minimumSize">
-        <size>
-         <width>120</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: #61dafb; font-size: 15px; background: #000; border: 1px solid #61dafb; padding: 7px;</string>
-       </property>
-       <property name="text">
-        <string>🛠️ Control Panel</string>
-       </property>
-      </widget>
      </item>
     </layout>
    </widget>
@@ -327,11 +266,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar">
-   <property name="styleSheet">
-    <string notr="true">color: #61dafb;</string>
-   </property>
-  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>

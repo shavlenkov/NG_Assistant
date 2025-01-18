@@ -11,14 +11,17 @@ CONFIG += c++17
 SOURCES += \
     src/main.cpp \
     src/assistant.cpp \
-    src/aiworker.cpp
+    src/aiworker.cpp \
+    src/controlpanel.cpp
 
 HEADERS += \
     include/assistant.h \
-    include/aiworker.h
+    include/aiworker.h \
+    include/controlpanel.h
 
 FORMS += \
-    ui/assistant.ui
+    ui/assistant.ui \
+    ui/controlpanel.ui
 
 RESOURCES += \
     resources/resources.qrc

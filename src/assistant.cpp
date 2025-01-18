@@ -4,6 +4,7 @@
 Assistant::Assistant(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Assistant)
+    , controlPanel(nullptr)
 {
     ui->setupUi(this);
     ui->label_2->setText(QString("Hello, %1! How can I help you?").arg(getName()));
@@ -35,6 +36,8 @@ Assistant::Assistant(QWidget *parent)
     connect(m_createChat, &QAction::triggered, this, &Assistant::createChat);
     connect(m_saveChat, &QAction::triggered, this, &Assistant::saveChat);
     connect(m_loadChat, &QAction::triggered, this, &Assistant::loadChat);
+
+    connect(ui->openControlPanelButton, &QPushButton::clicked, this, &Assistant::openControlPanel);
 }
 
 QString Assistant::getName()
@@ -102,12 +105,27 @@ void Assistant::sendAssistantMessage(QString message)
     m_timers.clear();
 
     if(isLinuxCommand(message)) {
-        QProcess process;
+        bool containsPath = false;
 
-        process.start("bash", QStringList() << "-c" << message);
-        process.waitForFinished();
+        if(!m_paths.empty()) {
+            for(const QString &path : m_paths) {
+                if(message.contains(path)) {
+                    containsPath = true;
+                    break;
+                }
+            }
+        }
 
-        message = "Action completed successfully!";
+        if(!containsPath) {
+            QProcess process;
+
+            process.start("bash", QStringList() << "-c" << message);
+            process.waitForFinished();
+
+            message = "Action completed successfully!";
+        } else {
+            message = "Forbidden!";
+        }
     }
 
     QTimer *timer = new QTimer(this);
@@ -274,10 +292,24 @@ void Assistant::startTypingAnimation()
     timer->start(200);
 }
 
+void Assistant::openControlPanel()
+{
+    if(!controlPanel) {
+        controlPanel = new ControlPanel(this);
+
+        connect(controlPanel, &ControlPanel::pathsSelected, this, [this](QStringList paths) {
+            m_paths = paths;
+        });
+    }
+
+    controlPanel->show();
+}
+
 Assistant::~Assistant()
 {
     m_aiThread->exit(0);
 
     delete m_aiWorker;
     delete ui;
+    delete controlPanel;
 }

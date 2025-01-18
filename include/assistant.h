@@ -24,6 +24,7 @@
 #include <QTimer>
 
 #include "aiworker.h"
+#include "controlpanel.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -46,6 +47,8 @@ private slots:
     void saveChat();
     void loadChat();
 
+    void openControlPanel();
+
 public slots:
     void sendAssistantMessage(QString message);
     void startTypingAnimation();
@@ -55,6 +58,7 @@ signals:
 
 private:
     Ui::Assistant *ui;
+    ControlPanel *controlPanel;
 
     QMenu *m_chatMenu;
     QAction *m_createChat;
@@ -65,6 +69,7 @@ private:
     AIWorker *m_aiWorker;
 
     QList<QTimer*> m_timers;
+    QStringList m_paths;
 
     const int MAX_LENGTH = 63;
 
