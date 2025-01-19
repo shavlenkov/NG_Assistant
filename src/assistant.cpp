@@ -122,7 +122,18 @@ void Assistant::sendAssistantMessage(QString message)
             process.start("bash", QStringList() << "-c" << message);
             process.waitForFinished();
 
-            message = "Action completed successfully!";
+            QString output = process.readAllStandardOutput().trimmed();
+            QString errorOutput = process.readAllStandardError().trimmed();
+
+            if(errorOutput.isEmpty()) {
+                message = "Action completed successfully!";
+
+                if(!output.isEmpty()) {
+                    message.append(QString("\n%1").arg(output));
+                }
+            } else {
+                message = "Error!";
+            }
         } else {
             message = "Forbidden!";
         }

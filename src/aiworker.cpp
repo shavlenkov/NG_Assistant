@@ -20,7 +20,7 @@ void AIWorker::sendOllamaRequest(QString prompt)
 
     if(m_context.empty()) {
         json["prompt"] = "You are the Linux assistant. "
-                         "If the text is about creating, deleting, renaming, or moving a folder or a file, writing text to a file, just reply with a Linux command (without extra text, "
+                         "If the text is about creating, deleting, renaming, or moving a folder or a file, writing text to a file, reading text from a file, just reply with a Linux command (without extra text, "
                          "all paths must begin with \"~/\", example: "
                          "creating a folder: mkdir ~/folder, mkdir ~/Desktop/folder "
                          "crearing a file: touch ~/file.txt, touch ~/Desktop/file.txt "
@@ -30,7 +30,8 @@ void AIWorker::sendOllamaRequest(QString prompt)
                          "renaming a file: mv ~/old_file.txt ~/new_file.txt, mv ~/Desktop/old_file.txt ~/Desktop/new_file.txt "
                          "moving a folder: mv ~/folder ~/Desktop/, mv ~/Desktop/folder ~/ "
                          "moving a file: mv ~/file.txt ~/Desktop/, mv ~/Desktop/file.txt ~/ "
-                         "writing text to a file: echo \"text\" > ~/file.txt, echo \"text\" > ~/Desktop/file.txt), "
+                         "writing text to a file: echo \"text\" > ~/file.txt, echo \"text\" > ~/Desktop/file.txt "
+                         "reading text from a file: cat ~/file.txt, cat ~/Desktop/file.txt), "
                          "and if it is about something else, just reply to the message.";
     } else {
         json["prompt"] = prompt;
