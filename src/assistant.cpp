@@ -171,6 +171,8 @@ void Assistant::createChat()
 {
     ui->chat->clear();
 
+    m_aiWorker->setContext(QJsonArray());
+
     QMessageBox::information(this, "Success", "Chat created successfully!");
 }
 
@@ -181,6 +183,10 @@ void Assistant::saveChat()
 
         return;
     }
+
+    QJsonObject rootObject = {};
+
+    rootObject["context"] = m_aiWorker->getContext();
 
     QJsonArray chatArray = {};
 
@@ -201,7 +207,9 @@ void Assistant::saveChat()
         chatArray.append(messageObject);
     }
 
-    QJsonDocument chatDoc(chatArray);
+    rootObject["chat"] = chatArray;
+
+    QJsonDocument chatDoc(rootObject);
 
     QString fileName = QFileDialog::getSaveFileName(
         this,
@@ -254,15 +262,20 @@ void Assistant::loadChat()
 
     QJsonDocument chatDoc = QJsonDocument::fromJson(fileContent);
 
-    if(!chatDoc.isArray()) {
+    if(!chatDoc.isObject()) {
         QMessageBox::critical(this, "Error", "Invalid chat format!");
 
         return;
     }
 
-    ui->chat->clear();
+    QJsonObject rootObject = chatDoc.object();
 
-    QJsonArray chatArray = chatDoc.array();
+    QJsonArray contextArray = rootObject.value("context").toArray();
+    QJsonArray chatArray = rootObject.value("chat").toArray();
+
+    m_aiWorker->setContext(contextArray);
+
+    ui->chat->clear();
 
     for(const QJsonValue &value : chatArray) {
         QString time = value.toObject().value("time").toString();

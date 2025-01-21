@@ -17,8 +17,8 @@ class AIWorker : public QObject
 public:
     explicit AIWorker(QObject *parent = nullptr);
 
-private slots:
-    void receivedResponse(QNetworkReply *reply);
+    QJsonArray getContext();
+    void setContext(QJsonArray context);
 
 public slots:
     void sendOllamaRequest(QString prompt);

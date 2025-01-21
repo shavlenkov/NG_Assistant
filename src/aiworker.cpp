@@ -6,6 +6,16 @@ AIWorker::AIWorker(QObject *parent)
     m_manager = new QNetworkAccessManager(this);
 }
 
+QJsonArray AIWorker::getContext()
+{
+    return m_context;
+}
+
+void AIWorker::setContext(QJsonArray context)
+{
+    m_context = context;
+}
+
 void AIWorker::sendOllamaRequest(QString prompt)
 {
     QSettings settings("../../.env", QSettings::IniFormat);
@@ -42,13 +52,41 @@ void AIWorker::sendOllamaRequest(QString prompt)
     QNetworkReply *reply = m_manager->post(request, QJsonDocument(json).toJson());
 
     connect(reply, &QNetworkReply::finished, this, [this, reply, prompt]() {
-        if(m_context.empty()) {
-            m_context = QJsonDocument::fromJson(reply->readAll()).object().value("context").toArray();
+        if(reply->error() == QNetworkReply::NoError) {
+            QJsonDocument responseDoc = QJsonDocument::fromJson(reply->readAll());
 
-            sendOllamaRequest(prompt);
+            if(!responseDoc.isObject()) {
+                emit statusUpdate("Invalid JSON response");
+                reply->deleteLater();
+
+                return;
+            }
+
+            QJsonObject responseObject = responseDoc.object();
+
+            if(!responseObject.contains("response") || !responseObject.contains("context")) {
+                emit statusUpdate("The JSON response doesn't contain the expected fields");
+                reply->deleteLater();
+
+                return;
+            }
+
+            if(m_context.isEmpty()) {
+                m_context = responseObject.value("context").toArray();
+
+                sendOllamaRequest(prompt);
+            } else {
+                m_context = responseObject.value("context").toArray();
+
+                emit responseReady(responseObject.value("response").toString());
+                emit statusUpdate("Done!");
+            }
         } else {
-            receivedResponse(reply);
+            qDebug() << "Error: " << reply->errorString();
+            emit statusUpdate(reply->errorString());
         }
+
+        m_animationStarted = false;
 
         reply->deleteLater();
     });
@@ -56,21 +94,8 @@ void AIWorker::sendOllamaRequest(QString prompt)
     emit statusUpdate("Thinking...");
 
     if(!m_animationStarted) {
-        emit startTypingAnimation();
-
         m_animationStarted = true;
-    }
-}
 
-void AIWorker::receivedResponse(QNetworkReply *reply)
-{
-    if(reply->error() == QNetworkReply::NoError) {
-        emit responseReady(QJsonDocument::fromJson(reply->readAll()).object().value("response").toString());
-        emit statusUpdate("Done!");
-    } else {
-        qDebug() << "Error: " << reply->errorString();
-        emit statusUpdate(reply->errorString());
+        emit startTypingAnimation();
     }
-
-    m_animationStarted = false;
 }
