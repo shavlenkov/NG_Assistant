@@ -32,7 +32,8 @@ void AIWorker::sendOllamaRequest(QString prompt)
                          "moving a file: mv ~/file.txt ~/Desktop/, mv ~/Desktop/file.txt ~/ "
                          "writing text to a file: echo \"text\" > ~/file.txt, echo \"text\" > ~/Desktop/file.txt "
                          "reading text from a file: cat ~/file.txt, cat ~/Desktop/file.txt), "
-                         "and if it is about something else, just reply to the message.";
+                         "and if the text is about something else (example: What is C++? What color is the sky? How high is Everest? Write the text of Lorem Ipsum), "
+                         "just reply to the message in text without a Linux command.";
     } else {
         json["prompt"] = prompt;
         json["context"] = m_context;
