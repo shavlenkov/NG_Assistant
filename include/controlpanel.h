@@ -6,6 +6,7 @@
 #include <QStringList>
 #include <QProcess>
 #include <QFileDialog>
+#include <QDir>
 
 namespace Ui {
 class ControlPanel;
@@ -27,8 +28,6 @@ signals:
 
 private:
     Ui::ControlPanel *ui;
-
-    QString getUsername();
 };
 
 #endif // CONTROLPANEL_H

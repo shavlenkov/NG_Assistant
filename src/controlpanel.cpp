@@ -10,34 +10,22 @@ ControlPanel::ControlPanel(QWidget *parent)
     connect(ui->selectFolderButton, &QPushButton::clicked, this, &ControlPanel::selectFolder);
 }
 
-QString ControlPanel::getUsername()
-{
-    QProcess process;
-
-    process.start("bash", QStringList() << "-c" << "whoami");
-    process.waitForFinished();
-
-    QString output = process.readAllStandardOutput().trimmed();
-
-    if(output.isEmpty()) {
-        return QString("anonymous");
-    }
-
-    return output;
-}
-
 void ControlPanel::selectFolder()
 {
     QString folderPath = QFileDialog::getExistingDirectory(this, "Select Folder");
 
     if(!folderPath.isEmpty() && ui->paths->findItems(folderPath, Qt::MatchExactly).isEmpty()) {
+        if(folderPath == "/" || folderPath == "/home") {
+            return;
+        }
+
         ui->paths->addItem(folderPath);
     }
 
     QStringList paths = {};
 
     for(int counter = 0; counter < ui->paths->count(); counter++) {
-        paths.append(ui->paths->item(counter)->text().replace(QString("/home/%1").arg(getUsername()), "~"));
+        paths.append(ui->paths->item(counter)->text().replace(QDir::homePath(), "~"));
     }
 
     emit pathsSelected(paths);
