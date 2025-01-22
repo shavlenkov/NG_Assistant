@@ -58,13 +58,15 @@ QString Assistant::getName()
 
 QString Assistant::insertLineBreaks(QString text, int maxLength)
 {
-    QStringList textParts = {};
+    QStringList formattedTextParts = {};
 
-    for(int start = 0; start < text.length(); start += maxLength) {
-        textParts.append(text.mid(start, maxLength));
+    for(const QString &part : text.split("\n")) {
+        for(int start = 0; start < part.length(); start += maxLength) {
+            formattedTextParts.append(part.mid(start, maxLength));
+        }
     }
 
-    return QString(textParts.join("\n"));
+    return QString(formattedTextParts.join("\n"));
 }
 
 bool Assistant::isLinuxCommand(QString command)
