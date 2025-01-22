@@ -12,12 +12,14 @@ SOURCES += \
     src/main.cpp \
     src/assistant.cpp \
     src/aiworker.cpp \
-    src/controlpanel.cpp
+    src/controlpanel.cpp \
+    src/util.cpp
 
 HEADERS += \
     include/assistant.h \
     include/aiworker.h \
-    include/controlpanel.h
+    include/controlpanel.h \
+    include/util.h
 
 FORMS += \
     ui/assistant.ui \

@@ -7,7 +7,7 @@ Assistant::Assistant(QWidget *parent)
     , controlPanel(nullptr)
 {
     ui->setupUi(this);
-    ui->label_2->setText(QString("Hello, %1! How can I help you?").arg(getName()));
+    ui->label_2->setText(QString("Hello, %1! How can I help you?").arg(Util::getName()));
     ui->chat->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     m_chatMenu = menuBar()->addMenu("Chat");
@@ -40,53 +40,14 @@ Assistant::Assistant(QWidget *parent)
     connect(ui->openControlPanelButton, &QPushButton::clicked, this, &Assistant::openControlPanel);
 }
 
-QString Assistant::getName()
-{
-    QProcess process;
-
-    process.start("bash", QStringList() << "-c" << "getent passwd $USER | cut -d: -f5 | cut -d, -f1");
-    process.waitForFinished();
-
-    QString output = process.readAllStandardOutput().trimmed();
-
-    if(output.isEmpty()) {
-        return QString("Anonymous");
-    }
-
-    return output;
-}
-
-QString Assistant::insertLineBreaks(QString text, int maxLength)
-{
-    QStringList formattedTextParts = {};
-
-    for(const QString &part : text.split("\n")) {
-        for(int start = 0; start < part.length(); start += maxLength) {
-            formattedTextParts.append(part.mid(start, maxLength));
-        }
-    }
-
-    return QString(formattedTextParts.join("\n"));
-}
-
-bool Assistant::isLinuxCommand(QString command)
-{
-    QProcess process;
-
-    process.start("which", QStringList() << command.split(" ")[0]);
-    process.waitForFinished();
-
-    return !process.readAllStandardOutput().trimmed().isEmpty();
-}
-
 void Assistant::sendUserMessage()
 {
     QString message = ui->messageInputField->text().trimmed();
 
     if(!message.isEmpty()) {
         ui->chat->addItem(
-            insertLineBreaks(
-                QString("[%1] %2: %3").arg(QTime::currentTime().toString("hh:mm"), getName(), message),
+            Util::insertLineBreaks(
+                QString("[%1] %2: %3").arg(QTime::currentTime().toString("hh:mm"), Util::getName(), message),
                 MAX_LENGTH
             )
         );
@@ -106,7 +67,7 @@ void Assistant::sendAssistantMessage(QString message)
 
     m_timers.clear();
 
-    if(isLinuxCommand(message)) {
+    if(Util::isLinuxCommand(message)) {
         bool containsPath = false;
 
         if(!m_paths.empty()) {
@@ -119,19 +80,13 @@ void Assistant::sendAssistantMessage(QString message)
         }
 
         if(!containsPath) {
-            QProcess process;
+            QPair<QString, QString> result = Util::executeLinuxCommand("bash", QStringList() << "-c" << message);
 
-            process.start("bash", QStringList() << "-c" << message);
-            process.waitForFinished();
-
-            QString output = process.readAllStandardOutput().trimmed();
-            QString errorOutput = process.readAllStandardError().trimmed();
-
-            if(errorOutput.isEmpty()) {
+            if(QString(result.second).isEmpty()) {
                 message = "Action completed successfully!";
 
-                if(!output.isEmpty()) {
-                    message.append(QString("\n%1").arg(output));
+                if(!QString(result.first).isEmpty()) {
+                    message.append(QString("\n%1").arg(result.first));
                 }
             } else {
                 message = "Error!";
@@ -145,7 +100,7 @@ void Assistant::sendAssistantMessage(QString message)
 
     connect(timer, &QTimer::timeout, [this, message, timer]() {
         ui->chat->item(ui->chat->count() - 1)->setText(
-            insertLineBreaks(
+            Util::insertLineBreaks(
                 QString("[%1] Assistant: %2").arg(QTime::currentTime().toString("hh:mm"), message.left(messageCharIndex)),
                 MAX_LENGTH
             )

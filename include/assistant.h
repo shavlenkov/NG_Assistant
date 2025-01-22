@@ -25,6 +25,7 @@
 
 #include "aiworker.h"
 #include "controlpanel.h"
+#include "util.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -75,9 +76,5 @@ private:
 
     int dotCounter = 0;
     int messageCharIndex = 1;
-
-    QString getName();
-    QString insertLineBreaks(QString text, int maxLength);
-    bool isLinuxCommand(QString command);
 };
 #endif // ASSISTANT_H
