@@ -32,3 +32,9 @@ RESOURCES += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+exists($$PWD/.env) {
+    !exists($$OUT_PWD/.env) {
+        QMAKE_POST_LINK += cp \"$$PWD/.env\" \"$$OUT_PWD/\"
+    }
+}
