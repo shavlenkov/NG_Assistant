@@ -18,7 +18,7 @@ void AIWorker::setContext(QJsonArray context)
 
 void AIWorker::sendOllamaRequest(QString prompt)
 {
-    QSettings settings("../../.env", QSettings::IniFormat);
+    QSettings settings(".env", QSettings::IniFormat);
 
     QNetworkRequest request(QUrl(settings.value("OLLAMA_URL").toString()));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
