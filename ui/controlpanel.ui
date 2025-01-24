@@ -134,7 +134,7 @@
         <string notr="true">color: #61dafb; font-size: 40px;</string>
        </property>
        <property name="text">
-        <string>Assistant</string>
+        <string>Control Panel</string>
        </property>
       </widget>
      </item>
@@ -201,7 +201,7 @@
         <string notr="true">color: #61dafb; font-size: 15px;</string>
        </property>
        <property name="text">
-        <string>Control Panel</string>
+        <string>Restrict the assistant's access to certain folders</string>
        </property>
       </widget>
      </item>
