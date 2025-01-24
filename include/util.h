@@ -5,6 +5,8 @@
 #include <QString>
 #include <QStringList>
 #include <QProcess>
+#include <QListWidget>
+#include <QDir>
 
 class Util
 {
@@ -12,6 +14,7 @@ public:
     static QPair<QString, QString> executeLinuxCommand(QString command, QStringList args);
     static QString getName();
     static QString insertLineBreaks(QString text, int maxLength);
+    static QStringList getPathsFromListWidget(QListWidget *pathListWidget);
     static bool isLinuxCommand(QString command);
 };
 

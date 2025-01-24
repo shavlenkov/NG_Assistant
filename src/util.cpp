@@ -37,6 +37,17 @@ QString Util::insertLineBreaks(QString text, int maxLength)
     return QString(formattedTextParts.join("\n"));
 }
 
+QStringList Util::getPathsFromListWidget(QListWidget *pathListWidget)
+{
+    QStringList paths = {};
+
+    for(int counter = 0; counter < pathListWidget->count(); counter++) {
+        paths.append(pathListWidget->item(counter)->text().replace(QDir::homePath(), "~"));
+    }
+
+    return paths;
+}
+
 bool Util::isLinuxCommand(QString command)
 {
     return !QString(executeLinuxCommand("which", QStringList() << command.split(" ")[0]).first).isEmpty();

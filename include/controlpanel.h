@@ -3,11 +3,10 @@
 
 #include <QMainWindow>
 #include <QString>
-#include <QStringList>
-#include <QProcess>
 #include <QFileDialog>
-#include <QDir>
 #include <QListWidgetItem>
+
+#include "util.h"
 
 namespace Ui {
 class ControlPanel;

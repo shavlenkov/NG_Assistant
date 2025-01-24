@@ -23,13 +23,7 @@ void ControlPanel::selectFolder()
         ui->paths->addItem(folderPath);
     }
 
-    QStringList paths = {};
-
-    for(int counter = 0; counter < ui->paths->count(); counter++) {
-        paths.append(ui->paths->item(counter)->text().replace(QDir::homePath(), "~"));
-    }
-
-    emit pathsSelected(paths);
+    emit pathsSelected(Util::getPathsFromListWidget(ui->paths));
 }
 
 void ControlPanel::removeFolder()
@@ -42,13 +36,7 @@ void ControlPanel::removeFolder()
 
     delete selectedPath;
 
-    QStringList paths = {};
-
-    for(int counter = 0; counter < ui->paths->count(); counter++) {
-        paths.append(ui->paths->item(counter)->text().replace(QDir::homePath(), "~"));
-    }
-
-    emit pathsSelected(paths);
+    emit pathsSelected(Util::getPathsFromListWidget(ui->paths));
 }
 
 ControlPanel::~ControlPanel()
