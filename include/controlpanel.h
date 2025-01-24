@@ -7,6 +7,7 @@
 #include <QProcess>
 #include <QFileDialog>
 #include <QDir>
+#include <QListWidgetItem>
 
 namespace Ui {
 class ControlPanel;
@@ -22,6 +23,7 @@ public:
 
 private slots:
     void selectFolder();
+    void removeFolder();
 
 signals:
     void pathsSelected(QStringList paths);

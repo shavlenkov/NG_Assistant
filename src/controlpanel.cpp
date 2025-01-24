@@ -8,6 +8,7 @@ ControlPanel::ControlPanel(QWidget *parent)
     ui->setupUi(this);
 
     connect(ui->selectFolderButton, &QPushButton::clicked, this, &ControlPanel::selectFolder);
+    connect(ui->removeFolderButton, &QPushButton::clicked, this, &ControlPanel::removeFolder);
 }
 
 void ControlPanel::selectFolder()
@@ -21,6 +22,25 @@ void ControlPanel::selectFolder()
 
         ui->paths->addItem(folderPath);
     }
+
+    QStringList paths = {};
+
+    for(int counter = 0; counter < ui->paths->count(); counter++) {
+        paths.append(ui->paths->item(counter)->text().replace(QDir::homePath(), "~"));
+    }
+
+    emit pathsSelected(paths);
+}
+
+void ControlPanel::removeFolder()
+{
+    QListWidgetItem *selectedPath = ui->paths->currentItem();
+
+    if(!selectedPath) {
+        return;
+    }
+
+    delete selectedPath;
 
     QStringList paths = {};
 

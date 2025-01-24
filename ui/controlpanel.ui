@@ -225,7 +225,7 @@
      <rect>
       <x>50</x>
       <y>160</y>
-      <width>651</width>
+      <width>601</width>
       <height>51</height>
      </rect>
     </property>
@@ -252,6 +252,16 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="removeFolderButton">
+       <property name="styleSheet">
+        <string notr="true">color: #61dafb; font-size: 15px; background: #000; border: 1px solid #61dafb; padding: 7px;</string>
+       </property>
+       <property name="text">
+        <string>❌ Remove Folder</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
