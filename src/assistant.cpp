@@ -169,7 +169,7 @@ void Assistant::saveChat()
     QJsonDocument chatDoc(rootObject);
 
     QString fileName = QFileDialog::getSaveFileName(
-        this,
+        nullptr,
         "Save Chat",
         "",
         "JSON Files (*.json)"
@@ -196,7 +196,7 @@ void Assistant::saveChat()
 void Assistant::loadChat()
 {
     QString fileName = QFileDialog::getOpenFileName(
-        this,
+        nullptr,
         "Load Chat",
         "",
         "JSON Files (*.json)"

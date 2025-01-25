@@ -13,7 +13,7 @@ ControlPanel::ControlPanel(QWidget *parent)
 
 void ControlPanel::selectFolder()
 {
-    QString folderPath = QFileDialog::getExistingDirectory(this, "Select Folder");
+    QString folderPath = QFileDialog::getExistingDirectory(nullptr, "Select Folder");
 
     if(!folderPath.isEmpty() && ui->paths->findItems(folderPath, Qt::MatchExactly).isEmpty()) {
         if(folderPath == "/" || folderPath == "/home") {
