@@ -8,7 +8,14 @@ QLabel {
     font-size: 14px;
 }
 
-QPushButton, QMenuBar, QMenu {
+QPushButton {
+    color: #61dafb;
+    border: 1px solid #61dafb;
+    background-color: #000;
+    padding: 5px;
+}
+
+QMenuBar, QMenu {
     color: #61dafb;
     background-color: #000;
 }
