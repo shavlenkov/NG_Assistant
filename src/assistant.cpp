@@ -25,7 +25,7 @@ Assistant::Assistant(QWidget *parent)
     m_aiThread->start();
     m_aiWorker->moveToThread(m_aiThread);
 
-    connect(ui->sendMessageButton, &QPushButton::clicked, this, &Assistant::sendUserMessage);
+    connect(ui->sendUserMessageButton, &QPushButton::clicked, this, &Assistant::sendUserMessage);
     connect(ui->messageInputField, &QLineEdit::returnPressed, this, &Assistant::sendUserMessage);
 
     connect(this, &Assistant::sendOllamaRequest, m_aiWorker, &AIWorker::sendOllamaRequest);

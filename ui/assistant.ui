@@ -57,7 +57,7 @@
      <string>Enter your message...</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="sendMessageButton">
+   <widget class="QPushButton" name="sendUserMessageButton">
     <property name="geometry">
      <rect>
       <x>550</x>
