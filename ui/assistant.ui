@@ -67,13 +67,10 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: #61dafb; border: 1px solid #61dafb</string>
+     <string notr="true">color: #61dafb; font-size: 15px; border: 1px solid #61dafb</string>
     </property>
     <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset theme="QIcon::ThemeIcon::MailForward"/>
+     <string>➤</string>
     </property>
    </widget>
    <widget class="QWidget" name="horizontalLayoutWidget">
