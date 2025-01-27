@@ -31,6 +31,8 @@ void ControlPanel::removeFolder()
     QListWidgetItem *selectedPath = ui->paths->currentItem();
 
     if(!selectedPath) {
+        QMessageBox::warning(this, "Warning", "No folder is selected for removal!");
+
         return;
     }
 

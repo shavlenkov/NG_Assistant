@@ -5,6 +5,7 @@
 #include <QString>
 #include <QFileDialog>
 #include <QListWidgetItem>
+#include <QMessageBox>
 
 #include "util.h"
 
