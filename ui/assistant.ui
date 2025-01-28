@@ -282,6 +282,9 @@
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <property name="topMargin">
+      <number>10</number>
+     </property>
      <item>
       <spacer name="horizontalSpacer_7">
        <property name="orientation">
