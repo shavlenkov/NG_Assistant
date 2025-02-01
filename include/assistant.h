@@ -26,6 +26,7 @@
 #include "aiworker.h"
 #include "controlpanel.h"
 #include "util.h"
+#include "config.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -50,6 +51,8 @@ private slots:
 
     void openControlPanel();
 
+    void showAboutProjectDialog();
+
 public slots:
     void sendAssistantMessage(QString message);
     void startTypingAnimation();
@@ -65,6 +68,9 @@ private:
     QAction *m_createChat;
     QAction *m_saveChat;
     QAction *m_loadChat;
+
+    QMenu *m_infoMenu;
+    QAction *m_aboutProject;
 
     QThread *m_aiThread;
     AIWorker *m_aiWorker;

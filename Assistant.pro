@@ -19,7 +19,8 @@ HEADERS += \
     include/assistant.h \
     include/aiworker.h \
     include/controlpanel.h \
-    include/util.h
+    include/util.h \
+    include/config.h
 
 FORMS += \
     ui/assistant.ui \

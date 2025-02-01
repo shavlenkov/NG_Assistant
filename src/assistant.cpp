@@ -20,6 +20,12 @@ Assistant::Assistant(QWidget *parent)
     m_chatMenu->addAction(m_saveChat);
     m_chatMenu->addAction(m_loadChat);
 
+    m_infoMenu = menuBar()->addMenu("Info");
+
+    m_aboutProject = new QAction("About Project", this);
+
+    m_infoMenu->addAction(m_aboutProject);
+
     m_aiWorker = new AIWorker();
     m_aiThread = new QThread(this);
     m_aiThread->start();
@@ -36,6 +42,8 @@ Assistant::Assistant(QWidget *parent)
     connect(m_createChat, &QAction::triggered, this, &Assistant::createChat);
     connect(m_saveChat, &QAction::triggered, this, &Assistant::saveChat);
     connect(m_loadChat, &QAction::triggered, this, &Assistant::loadChat);
+
+    connect(m_aboutProject, &QAction::triggered, this, &Assistant::showAboutProjectDialog);
 
     connect(ui->openControlPanelButton, &QPushButton::clicked, this, &Assistant::openControlPanel);
 }
@@ -284,6 +292,36 @@ void Assistant::openControlPanel()
     }
 
     controlPanel->show();
+}
+
+void Assistant::showAboutProjectDialog()
+{
+    QMessageBox aboutProjectDialog;
+
+    aboutProjectDialog.setWindowTitle("About Project");
+    aboutProjectDialog.setText(
+        QString(
+            "<b>Project Name</b>: %1<br/>"
+            "<b>Project Description</b>: %2<br/>"
+            "<b>Operating System</b>: %3<br/>"
+            "<b>Technologies Used</b>: %4<br/>"
+            "<b>Author</b>: <a href=\"%6\" style=\"color: #61dafb;\">%5</a><br/>"
+            "<b>GitHub Repository</b>: <a href=\"%7\" style=\"color: #61dafb;\">%7</a>"
+            "<br/><br/>"
+            "&copy; %8 %5. All rights reserved."
+        ).arg(
+            PROJECT_NAME,
+            PROJECT_DESCRIPTION,
+            OPERATING_SYSTEM,
+            TECHNOLOGIES_USED,
+            AUTHOR_FULL_NAME,
+            AUTHOR_GITHUB_URL,
+            GITHUB_REPO_URL,
+            COPYRIGHT_YEAR
+        )
+    );
+
+    aboutProjectDialog.exec();
 }
 
 Assistant::~Assistant()
