@@ -219,7 +219,7 @@ void Assistant::loadChat()
 
     QJsonDocument chatDoc = QJsonDocument::fromJson(fileContent);
 
-    if(!chatDoc.isObject()) {
+    if(!Util::isValidChatFormat(chatDoc)) {
         QMessageBox::critical(this, "Error", "Invalid chat format!");
 
         return;

@@ -52,3 +52,40 @@ bool Util::isLinuxCommand(QString command)
 {
     return !QString(executeLinuxCommand("which", QStringList() << command.split(" ")[0]).first).isEmpty();
 }
+
+bool Util::isValidChatFormat(QJsonDocument chatDoc)
+{
+    if(!chatDoc.isObject() ||
+       !chatDoc.object().contains("chat") ||
+       !chatDoc.object().contains("context") ||
+       chatDoc.object()["chat"].toArray().isEmpty() ||
+       chatDoc.object()["context"].toArray().isEmpty())
+    {
+        return false;
+    }
+
+    for(const QJsonValue &value : chatDoc.object()["chat"].toArray()) {
+        if(!value.isObject() ||
+           !value.toObject().contains("message") ||
+           !value.toObject().contains("name") ||
+           !value.toObject().contains("time") ||
+           !value.toObject()["message"].isString() ||
+           !value.toObject()["name"].isString() ||
+           !value.toObject()["time"].isString())
+        {
+            return false;
+        }
+    }
+
+    for(const QJsonValue &value : chatDoc.object()["context"].toArray()) {
+        if(value.isDouble() && value.toDouble() != value.toInt()) {
+            return false;
+        }
+
+        if(value.isString()) {
+            return false;
+        }
+    }
+
+    return true;
+}
