@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QString>
+#include <QStringList>
 #include <QFileDialog>
 #include <QListWidgetItem>
 #include <QMessageBox>
@@ -26,7 +27,7 @@ private slots:
     void removeFolder();
 
 signals:
-    void pathsSelected(QStringList paths);
+    void pathsSelected(const QStringList &paths);
 
 private:
     Ui::ControlPanel *ui;

@@ -2,9 +2,11 @@
 #define AIWORKER_H
 
 #include <QObject>
+#include <QString>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QUrl>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonDocument>
@@ -17,20 +19,20 @@ class AIWorker : public QObject
 public:
     explicit AIWorker(QObject *parent = nullptr);
 
-    QJsonArray getContext();
-    void setContext(QJsonArray context);
+    QJsonArray getContext() const;
+    void setContext(const QJsonArray &context);
 
 public slots:
-    void sendOllamaRequest(QString prompt);
+    void sendOllamaRequest(const QString &prompt);
 
 signals:
-    void responseReady(QString text);
-    void statusUpdate(QString text, int timeout = 0);
+    void responseReady(const QString &text);
+    void statusUpdate(const QString &text, int timeout = 0);
     void startTypingAnimation();
 
 private:
     QNetworkAccessManager *m_manager;
-    QJsonArray m_context;
+    QJsonArray m_context = {};
 
     bool m_animationStarted = false;
 };

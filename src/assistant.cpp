@@ -267,11 +267,13 @@ void Assistant::startTypingAnimation()
             ui->chat->item(ui->chat->count() - 1)->setText(
                 QString("[%1] Assistant: %2").arg(QTime::currentTime().toString("hh:mm"), QString(dotCounter, '.'))
             );
+
             dotCounter++;
         } else {
             ui->chat->item(ui->chat->count() - 1)->setText(
                 QString("[%1] Assistant: ").arg(QTime::currentTime().toString("hh:mm"))
             );
+
             dotCounter = 0;
         }
     });
@@ -286,7 +288,7 @@ void Assistant::openControlPanel()
     if(!controlPanel) {
         controlPanel = new ControlPanel(this);
 
-        connect(controlPanel, &ControlPanel::pathsSelected, this, [this](QStringList paths) {
+        connect(controlPanel, &ControlPanel::pathsSelected, this, [this](const QStringList &paths) {
             m_paths = paths;
         });
     }

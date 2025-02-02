@@ -6,17 +6,17 @@ AIWorker::AIWorker(QObject *parent)
     m_manager = new QNetworkAccessManager(this);
 }
 
-QJsonArray AIWorker::getContext()
+QJsonArray AIWorker::getContext() const
 {
     return m_context;
 }
 
-void AIWorker::setContext(QJsonArray context)
+void AIWorker::setContext(const QJsonArray &context)
 {
     m_context = context;
 }
 
-void AIWorker::sendOllamaRequest(QString prompt)
+void AIWorker::sendOllamaRequest(const QString &prompt)
 {
     QSettings settings(".env", QSettings::IniFormat);
 
@@ -57,6 +57,7 @@ void AIWorker::sendOllamaRequest(QString prompt)
 
             if(!responseDoc.isObject()) {
                 emit statusUpdate("Invalid JSON response");
+
                 reply->deleteLater();
 
                 return;
@@ -66,6 +67,7 @@ void AIWorker::sendOllamaRequest(QString prompt)
 
             if(!responseObject.contains("response") || !responseObject.contains("context")) {
                 emit statusUpdate("The JSON response doesn't contain the expected fields");
+
                 reply->deleteLater();
 
                 return;
@@ -82,7 +84,8 @@ void AIWorker::sendOllamaRequest(QString prompt)
                 emit statusUpdate("Done!");
             }
         } else {
-            qDebug() << "Error: " << reply->errorString();
+            qDebug() << "Error:" << reply->errorString();
+
             emit statusUpdate(reply->errorString());
         }
 

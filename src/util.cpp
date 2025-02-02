@@ -1,6 +1,6 @@
 #include "../include/util.h"
 
-QPair<QString, QString> Util::executeLinuxCommand(QString command, QStringList args)
+QPair<QString, QString> Util::executeLinuxCommand(const QString &command, const QStringList &args)
 {
     QProcess process;
 
@@ -24,7 +24,7 @@ QString Util::getName()
     return result.first;
 }
 
-QString Util::insertLineBreaks(QString text, int maxLength)
+QString Util::insertLineBreaks(const QString &text, int maxLength)
 {
     QStringList formattedTextParts = {};
 
@@ -48,12 +48,12 @@ QStringList Util::getPathsFromListWidget(QListWidget *pathListWidget)
     return paths;
 }
 
-bool Util::isLinuxCommand(QString command)
+bool Util::isLinuxCommand(const QString &command)
 {
     return !QString(executeLinuxCommand("which", QStringList() << command.split(" ")[0]).first).isEmpty();
 }
 
-bool Util::isValidChatFormat(QJsonDocument chatDoc)
+bool Util::isValidChatFormat(const QJsonDocument &chatDoc)
 {
     if(!chatDoc.isObject() ||
        !chatDoc.object().contains("chat") ||

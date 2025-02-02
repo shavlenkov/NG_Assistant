@@ -11,14 +11,17 @@
 #include <QMessageBox>
 #include <QJsonArray>
 #include <QJsonObject>
-#include <QJsonValue>
 #include <QJsonDocument>
-#include <QFile>
+#include <QJsonValue>
 #include <QFileDialog>
+#include <QFile>
+#include <QIODevice>
 #include <QByteArray>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
 #include <QThread>
+#include <QPushButton>
+#include <QLineEdit>
 #include <QStatusBar>
 #include <QList>
 #include <QTimer>
@@ -58,7 +61,7 @@ public slots:
     void startTypingAnimation();
 
 signals:
-    void sendOllamaRequest(QString prompt);
+    void sendOllamaRequest(const QString &prompt);
 
 private:
     Ui::Assistant *ui;
@@ -75,8 +78,8 @@ private:
     QThread *m_aiThread;
     AIWorker *m_aiWorker;
 
-    QList<QTimer*> m_timers;
-    QStringList m_paths;
+    QList<QTimer*> m_timers = {};
+    QStringList m_paths = {};
 
     const int MAX_LENGTH = 63;
 
