@@ -8,7 +8,7 @@ void loadApplicationStyleSheet(QApplication *application)
     QFile styleSheetFile(":/qss/stylesheet.qss");
 
     if(!styleSheetFile.exists()) {
-        qDebug() << "Error: The stylesheet file does not exist!";
+        qDebug() << "Error: The stylesheet file doesn't exist!";
 
         return;
     }

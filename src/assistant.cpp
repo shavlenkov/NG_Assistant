@@ -190,7 +190,7 @@ void Assistant::saveChat()
     QFile file(fileName);
 
     if(!file.open(QIODevice::WriteOnly)) {
-        QMessageBox::critical(this, "Error", "Could not save chat!");
+        QMessageBox::critical(this, "Error", "Couldn't save the chat!");
 
         return;
     }
@@ -217,7 +217,7 @@ void Assistant::loadChat()
     QFile file(fileName);
 
     if(!file.open(QIODevice::ReadOnly)) {
-        QMessageBox::critical(this, "Error", "Could not open chat file!");
+        QMessageBox::critical(this, "Error", "Couldn't open the chat file!");
 
         return;
     }
