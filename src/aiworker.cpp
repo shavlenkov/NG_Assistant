@@ -20,6 +20,12 @@ void AIWorker::sendOllamaRequest(const QString &prompt)
 {
     QSettings settings(".env", QSettings::IniFormat);
 
+    if(settings.value("OLLAMA_URL").toString().isEmpty()) {
+        emit statusUpdate("The OLLAMA_URL variable is empty!");
+
+        return;
+    }
+
     QNetworkRequest request(QUrl(settings.value("OLLAMA_URL").toString()));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
@@ -56,7 +62,7 @@ void AIWorker::sendOllamaRequest(const QString &prompt)
             QJsonDocument responseDoc = QJsonDocument::fromJson(reply->readAll());
 
             if(!responseDoc.isObject()) {
-                emit statusUpdate("Invalid JSON response");
+                emit statusUpdate("Invalid JSON response!");
 
                 reply->deleteLater();
 
@@ -66,7 +72,7 @@ void AIWorker::sendOllamaRequest(const QString &prompt)
             QJsonObject responseObject = responseDoc.object();
 
             if(!responseObject.contains("response") || !responseObject.contains("context")) {
-                emit statusUpdate("The JSON response doesn't contain the expected fields");
+                emit statusUpdate("The JSON response doesn't contain the expected fields!");
 
                 reply->deleteLater();
 
@@ -84,9 +90,9 @@ void AIWorker::sendOllamaRequest(const QString &prompt)
                 emit statusUpdate("Done!");
             }
         } else {
-            qDebug() << "Error:" << reply->errorString();
+            qDebug() << "Error:" << reply->errorString() + "!";
 
-            emit statusUpdate(reply->errorString());
+            emit statusUpdate(reply->errorString() + "!");
         }
 
         m_animationStarted = false;
