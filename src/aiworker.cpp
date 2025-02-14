@@ -36,20 +36,21 @@ void AIWorker::sendOllamaRequest(const QString &prompt)
 
     if(m_context.empty()) {
         json["prompt"] = "You are the Linux assistant. "
-                         "If the text is about creating, deleting, renaming, or moving a folder or a file, writing text to a file, reading text from a file, just reply with a Linux command (without extra text, "
-                         "all paths must begin with \"~/\", example: "
-                         "creating a folder: mkdir ~/folder, mkdir ~/Desktop/folder "
-                         "crearing a file: touch ~/file.txt, touch ~/Desktop/file.txt "
-                         "deleting a folder: rm -Rf ~/folder, rm -Rf ~/Desktop/folder "
-                         "deleting a file: rm -f ~/file.txt, rm -f ~/Desktop/file.txt "
-                         "renaming a folder: mv ~/old_folder ~/new_folder, mv ~/Desktop/old_folder ~/Desktop/new_folder "
-                         "renaming a file: mv ~/old_file.txt ~/new_file.txt, mv ~/Desktop/old_file.txt ~/Desktop/new_file.txt "
-                         "moving a folder: mv ~/folder ~/Desktop/, mv ~/Desktop/folder ~/ "
-                         "moving a file: mv ~/file.txt ~/Desktop/, mv ~/Desktop/file.txt ~/ "
-                         "writing text to a file: echo \"text\" > ~/file.txt, echo \"text\" > ~/Desktop/file.txt "
-                         "reading text from a file: cat ~/file.txt, cat ~/Desktop/file.txt), "
-                         "and if the text is about something else (example: What is C++? What color is the sky? How high is Everest? Write the text of Lorem Ipsum), "
-                         "just reply to the message in text without a Linux command.";
+                         "If the text is about creating, deleting, renaming, moving a folder or file, writing text to a file or reading text from a file, just reply with a Linux command (without unnecessary text). "
+                         "All paths must start with \"~/\". "
+                         "Examples: "
+                         "1. creating a folder: mkdir ~/folder, mkdir ~/Desktop/folder "
+                         "2. creating a file: touch ~/file.txt, touch ~/Desktop/file.txt "
+                         "3. deleting a folder: rm -Rf ~/folder, rm -Rf ~/Desktop/folder "
+                         "4. deleting a file: rm -f ~/file.txt, rm -f ~/Desktop/file.txt "
+                         "5. renaming a folder: mv ~/old_folder ~/new_folder, mv ~/Desktop/old_folder ~/Desktop/new_folder "
+                         "6. renaming a file: mv ~/old_file.txt ~/new_file.txt, mv ~/Desktop/old_file.txt ~/Desktop/new_file.txt "
+                         "7. moving a folder: mv ~/folder ~/Desktop/, mv ~/Desktop/folder ~/ "
+                         "8. moving a file: mv ~/file.txt ~/Desktop/, mv ~/Desktop/file.txt ~/ "
+                         "9. writing text to a file: echo \"text\" > ~/file.txt, echo \"text\" > ~/Desktop/file.txt "
+                         "10. reading text from a file: cat ~/file.txt, cat ~/Desktop/file.txt "
+                         "And if the text is about something else (examples: What is C++? What color is the sky? How high is Mount Everest? Write the text of Lorem Ipsum), "
+                         "just reply to the message in text form without a Linux command.";
     } else {
         json["prompt"] = prompt;
         json["context"] = m_context;
