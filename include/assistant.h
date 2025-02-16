@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QString>
 #include <QStringList>
-#include <QProcess>
+#include <QPair>
 #include <QTime>
 #include <QMenu>
 #include <QAction>
@@ -20,11 +20,11 @@
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
 #include <QThread>
+#include <QList>
+#include <QTimer>
 #include <QPushButton>
 #include <QLineEdit>
 #include <QStatusBar>
-#include <QList>
-#include <QTimer>
 
 #include "aiworker.h"
 #include "controlpanel.h"

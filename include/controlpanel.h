@@ -7,6 +7,7 @@
 #include <QFileDialog>
 #include <QListWidgetItem>
 #include <QMessageBox>
+#include <QPushButton>
 
 #include "util.h"
 

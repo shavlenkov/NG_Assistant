@@ -1,6 +1,7 @@
 #include "../include/assistant.h"
 
 #include <QApplication>
+#include <QFile>
 #include <QDebug>
 
 void loadApplicationStyleSheet(QApplication *application)
@@ -26,7 +27,9 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     loadApplicationStyleSheet(&a);
+
     Assistant w;
     w.show();
+
     return a.exec();
 }
