@@ -32,7 +32,7 @@ Assistant::Assistant(QWidget *parent)
     m_aiWorker->moveToThread(m_aiThread);
 
     connect(ui->sendUserMessageButton, &QPushButton::clicked, this, &Assistant::sendUserMessage);
-    connect(ui->messageInputField, &QLineEdit::returnPressed, this, &Assistant::sendUserMessage);
+    connect(ui->userMessageInputField, &QLineEdit::returnPressed, this, &Assistant::sendUserMessage);
 
     connect(this, &Assistant::sendOllamaRequest, m_aiWorker, &AIWorker::sendOllamaRequest);
     connect(m_aiWorker, &AIWorker::responseReady, this, &Assistant::sendAssistantMessage);
@@ -50,7 +50,7 @@ Assistant::Assistant(QWidget *parent)
 
 void Assistant::sendUserMessage()
 {
-    QString message = ui->messageInputField->text().trimmed();
+    QString message = ui->userMessageInputField->text().trimmed();
 
     if(!message.isEmpty()) {
         ui->chat->addItem(
@@ -60,7 +60,7 @@ void Assistant::sendUserMessage()
             )
         );
 
-        ui->messageInputField->clear();
+        ui->userMessageInputField->clear();
 
         emit sendOllamaRequest(message);
     }
@@ -120,7 +120,7 @@ void Assistant::sendAssistantMessage(QString message)
 
             QTimer::singleShot(1000, [this]() {
                 ui->statusbar->clearMessage();
-                ui->messageInputField->setDisabled(false);
+                ui->userMessageInputField->setDisabled(false);
             });
 
             messageCharIndex = 1;
@@ -257,7 +257,7 @@ void Assistant::loadChat()
 
 void Assistant::startTypingAnimation()
 {
-    ui->messageInputField->setDisabled(true);
+    ui->userMessageInputField->setDisabled(true);
     ui->chat->addItem(QString("[%1] Assistant: ").arg(QTime::currentTime().toString("hh:mm")));
 
     QTimer *timer = new QTimer(this);

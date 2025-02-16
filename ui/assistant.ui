@@ -41,7 +41,7 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <widget class="QLineEdit" name="messageInputField">
+   <widget class="QLineEdit" name="userMessageInputField">
     <property name="geometry">
      <rect>
       <x>50</x>
